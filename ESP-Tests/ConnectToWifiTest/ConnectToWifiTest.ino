@@ -25,7 +25,7 @@
 
 // Enter your WiFi SSID and password
 char ssid[] = "iotroam";             // your network SSID (name)
-char pass[] = "3ZdUr22kAf";    // your network password (use for WPA, or use as key for WEP)
+char pass[] = "EbSkb8Fxdy";    // your network password (use for WPA, or use as key for WEP)
 int keyIndex = 0;                      // your network key Index number (needed only for WEP)
 
 int status = WL_IDLE_STATUS;

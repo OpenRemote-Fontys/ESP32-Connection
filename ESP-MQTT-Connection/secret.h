@@ -1,6 +1,6 @@
 // Wifi 
 const char* ssid = "iotroam"; // Wifi SSID
-const char* password = "3ZdUr22kAf"; // Wifi Password (is mac dependant) https://iotroam.nl/
+const char* password = "EbSkb8Fxdy"; // Wifi Password (is mac dependant) https://iotroam.nl/
 
 //MQTT Broker
 const char* mqtt_server = "robinvanhoof.tech";
@@ -14,7 +14,7 @@ const char* lastwillmsg = "0";
 
 
 //subscribing Topic
-const char *topic = "master/esp32-1/asset/6pWmdLBaJXgwjvYi4V3BEg"; //see Subscribing Topics in Documentation https://github.com/openremote/openremote/wiki/User-Guide%3A-Manager-APIs#mqtt-api-mqtt-broker
+const char *topic = "master/esp32-1/writeattributevalue/writeAttribute/6pWmdLBaJXgwjvYi4V3BEg"; //see Subscribing Topics in Documentation https://github.com/openremote/openremote/wiki/User-Guide%3A-Manager-APIs#mqtt-api-mqtt-broker
 
 
 //Local CA
