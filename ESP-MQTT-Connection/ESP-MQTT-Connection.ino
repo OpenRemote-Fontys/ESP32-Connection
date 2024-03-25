@@ -1,11 +1,12 @@
 #include "secret.h"
 //#include <ESP8266WiFi.h> // remove comment for ESP8266, and add comment at #include <WiFi.h> 
-#include <WiFi.h>          
+#include <WiFi.h> 
+#include <WiFiClientSecure.h> 
 #include <PubSubClient.h>
 
 //Objects
-//WiFiClientSecure askClient; //SSL Client
-WiFiClient askClient; //Non-SSL Client, also remove the comments for askClient.setCACert(local_root_ca);
+WiFiClientSecure askClient; //SSL Client
+//WiFiClient askClient; //Non-SSL Client, also remove the comments for askClient.setCACert(local_root_ca);
 
 PubSubClient client(askClient);
 
@@ -22,7 +23,7 @@ void setup() {
 
 
   Serial.println(WiFi.localIP());
-  //askClient.setCACert(local_root_ca); //If you use non SSL then comment out
+  askClient.setCACert(local_root_ca); //If you use non SSL then comment out
   Serial.println(client.setServer(mqtt_server, mqtt_port).connect(ClientID, username, mqttpass)) ;
   //client.setCallback(callback);
 
@@ -30,7 +31,7 @@ void setup() {
 
 void loop() {
 
-    client.publish(topic, "{ \"msg\":\"1234Message\" }");
+    client.publish(topic, "{ \"msg\":\"EvenBetterMessage\" }");
   //To publish Strings:
   delay(10000);
 
