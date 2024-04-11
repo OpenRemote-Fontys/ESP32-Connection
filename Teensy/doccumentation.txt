@@ -1,0 +1,2 @@
+Quickstart Follow Teensy Website: https://www.pjrc.com/teensy/td_download.html
+Pinout: https://www.pjrc.com/teensy/pinout.html
