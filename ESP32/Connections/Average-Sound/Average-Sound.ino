@@ -14,33 +14,38 @@ PubSubClient client(askClient);
 
 void setup() {
   Serial.begin(115200);
-  // Serial.println(ssid);
+  Serial.println(ssid);
 
-  // WiFi.begin(ssid, password);
+  WiFi.begin(ssid, password);
 
-  // while (WiFi.status() != WL_CONNECTED) {
-  //   delay(500);
-  // }
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+  }
 
-
-  // Serial.println(WiFi.localIP());
-  // askClient.setCACert(local_root_ca);  //If you use non SSL then comment out
-  // Serial.println(client.setServer(mqtt_server, mqtt_port).connect(ClientID, username, mqttpass));
-  // //client.setCallback(callback);
+  Serial.println(WiFi.localIP());
+  askClient.setCACert(local_root_ca);  //If you use non SSL then comment out
+  Serial.println(client.setServer(mqtt_server, mqtt_port).connect(ClientID, username, mqttpass));
 }
 
 void loop() {
-  int StartTime = micros();
   int counter = 0;
   long sum = 0;
+  int maximum = 0;
 
-  Serial.println("Start");
-  while (counter < 100000) {
+  if (!client.connected()) {
+    reconnect();
+  }
+
+  int StartTime = millis();
+  while ((millis() - StartTime) < 20000) {
     int reading = analogRead(AudioPin);
     sum = sum + (1360 + abs(1360 - reading));
     counter++;
+    if (maximum < reading){
+      maximum = reading;
+    }
+    Serial.println(reading);
   }
-  Serial.println("Finish");
 
   //Caluclate Average
   float average = float(sum) / float(counter);
@@ -48,37 +53,27 @@ void loop() {
   Serial.println(voltage);
   Serial.println(average);
 
-  delay(10000);
+  //Calculate maxVoltage
+  float maxvoltage = (((float(maximum) / 2720.0) * 3.3) - 1.65);
+  Serial.println(maximum);
+  Serial.println(maxvoltage);
+
+  client.publish(topicAverageVolume, String(voltage).c_str());
+  client.publish(topicMaximumVolume, String(maxvoltage).c_str());
 }
 
-// //MQTT callback
-// void callback(char* topic, byte * payload, unsigned int length) {
-
-//   for (int i = 0; i < length; i++) {
-//     Serial.println(topic);
-//     Serial.print(" has send ");
-//     Serial.print((char)payload[i]);
-//   }
-
-// }
-
-// //MQTT reconnect
-// void reconnect() {
-//   // Loop until we're reconnected
-//   while (!client.connected()) {
-//     Serial.print("********** Attempting MQTT connection...");
-//     // Attempt to connect
-//     if (client.connect(ClientID, username, mqttpass, lastwill, 1, 1, lastwillmsg)) {
-//       Serial.println("-> MQTT client connected");
-//       client.subscribe(topic);
-//       Serial.print("Subscribed to: ");
-//       Serial.println(topic);
-//     } else {
-//       Serial.print("failed, rc=");
-//       Serial.print(client.state());
-//       Serial.println("-> try again in 5 seconds");
-//       // Wait 5 seconds before retrying
-//       delay(5000);
-//     }
-//   }
-// }
+void reconnect() {
+  // Loop until we're reconnected
+  while (!client.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    if (client.connect(ClientID, username, mqttpass)) {
+      Serial.println("connected");
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(client.state());
+      Serial.println(" try again in 5 seconds");
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }
+}
