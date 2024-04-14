@@ -1,8 +1,9 @@
 #include "secret.h"
-//#include <ESP8266WiFi.h> // remove comment for ESP8266, and add comment at #include <WiFi.h> 
 #include <WiFi.h> 
 #include <WiFiClientSecure.h> 
 #include <PubSubClient.h>
+
+#define AudioPin 36
 
 //Objects
 WiFiClientSecure askClient; //SSL Client
@@ -30,10 +31,21 @@ void setup() {
 }
 
 void loop() {
+  int StartTime = micros();
+  
+  int counter = 0;
+    //List or array here
 
-    client.publish(topic, "{ \"msg\":\"EvenBetterMessage\" }");
-  //To publish Strings:
-  delay(10000);
+    while (micros() - StartTime < 20000) {
+
+    analogRead(AudioPin);
+    counter++;
+   }
+    //Caluclate Average
+    //Send average
+    
+
+  delay();
 
 }
 
