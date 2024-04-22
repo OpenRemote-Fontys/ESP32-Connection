@@ -31,6 +31,7 @@ void loop() {
   int counter = 0;
   long sum = 0;
   int maximum = 0;
+  int minimum = 0;
 
   if (!client.connected()) {
     reconnect();
@@ -44,7 +45,9 @@ void loop() {
     if (maximum < reading){
       maximum = reading;
     }
-    Serial.println(reading);
+    else if (minimum > reading) {
+         = reading;
+    }
   }
 
   //Caluclate Average
