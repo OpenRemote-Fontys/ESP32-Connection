@@ -20,6 +20,7 @@ ArduinoFFT<double> FFT = ArduinoFFT<double>(vReal, vImaginary, SAMPLES, SAMPLE_F
 
 void setup() {
   Serial.begin(115200);
+  Serial1.begin(9600);
 
   sampling_period_us = round(1000000 * (1.0 / SAMPLE_FREQ));  //Cacluating the time per sample
 }
@@ -107,7 +108,9 @@ void loop() {
     Serial.print(i);
     Serial.print(" Value: ");
     Serial.println(bandValues[i]);
+    Serial1.println(bandValues[i]);
   }
+
 
   delay(10000);
 }
