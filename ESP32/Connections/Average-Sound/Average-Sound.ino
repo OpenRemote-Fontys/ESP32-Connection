@@ -46,7 +46,7 @@ void loop() {
       maximum = reading;
     }
     else if (minimum > reading) {
-         = reading;
+        minimum = reading;
     }
   }
 

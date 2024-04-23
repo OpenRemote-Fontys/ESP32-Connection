@@ -8,15 +8,15 @@ void loop() {
   int startTime = micros();
   int readings[100000];
 
-  for (int i = 0; i < 100000; i++) {
+  for (int i = 0; i < 1000000; i++) {
     readings[i] = analogRead(max9814OutputPin);
   }
 
   int computeTime = micros() - startTime;
 
-  float timePer = computeTime / 100000.0;
+  float timePer = computeTime / 1000000.0;
   Serial.println(timePer);
-  float Hz = 1 / (timePer / 1000000);
+  float Hz = 1 / (timePer / 10000000);
   Serial.println(Hz);
 
   unsigned long sum = 0;
