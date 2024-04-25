@@ -104,12 +104,15 @@ void loop() {
   }
 
   for (int i = 0; i < NUMBER_BANDS; i++) {
-    Serial.print("Band: ");
-    Serial.print(i);
-    Serial.print(" Value: ");
-    Serial.println(bandValues[i]);
-    Serial1.println(bandValues[i]);
+    Serial1.print(bandValues[i]);
+    Serial.print(bandValues[i]);
+    if(i < NUMBER_BANDS - 1) {
+      Serial1.print(",");
+      Serial.print(",");
+    }
   }
+  Serial1.println();
+  Serial.println();
 
 
   delay(10000);
