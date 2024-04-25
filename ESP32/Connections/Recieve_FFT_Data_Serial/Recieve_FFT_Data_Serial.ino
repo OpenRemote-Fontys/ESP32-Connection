@@ -1,38 +1,71 @@
 #include <stdio.h>
 #include <string.h>
+#include "secret.h"
+#include <WiFiClientSecure.h>
+#include <PubSubClient.h>
+#include <ArduinoJson.h>
 
 int FFTValues[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
+WiFiClientSecure askClient;
+PubSubClient client(askClient);
+
 void setup() {
   Serial.begin(9600);  // Initialize Serial at 9600 baud rate
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+  }
+
+  askClient.setCACert(local_root_ca);  //If you use non SSL then comment out
+  client.setServer(mqtt_server, mqtt_port);
+  client.connect(ClientID, username, mqttpass);
 }
 
 void loop() {
+  if (!client.connected()) {
+    reconnect();
+  }
+
   if (Serial.available() > 0) {
-
-    for (int i = 0; i < 16; i++) {
-      FFTValues[i] = 0;
-    }
-
-    String receivedDataString = Serial.readStringUntil('\n');  // Read data until newline character
+    String receivedDataString = Serial.readStringUntil('\n');
     Serial.println(receivedDataString);
-    char receivedData[128];
 
-    // Copy the contents of receivedDataString into receivedData buffer
+    DynamicJsonDocument doc(256);  // Adjust size as needed
+    char receivedData[128];
     receivedDataString.toCharArray(receivedData, sizeof(receivedData));
 
-    // Tokenize the string using strtok
     char *value = strtok(receivedData, ",");
-
     int i = 0;
 
-    // Iterate through the tokens
-    while (value != NULL) {
-      FFTValues[i] = atoi(value);
-      Serial.println(FFTValues[i]);
-      value = strtok(NULL, ",");  // Get the next token
-      i++  ;                           
+    while (value != NULL && i < 16) {
+      doc["FFT" + String(i)] = atoi(value);
+      value = strtok(NULL, ",");
+      i++;
     }
 
+    char jsonBuffer[256];
+    serializeJson(doc, jsonBuffer);
+
+    Serial.println(jsonBuffer);
+    client.publish(topicSoundReadings, jsonBuffer);
+  }
+
+  client.loop();
+}
+
+void reconnect() {
+  // Loop until we're reconnected
+  while (!client.connected()) {
+    Serial.println("Attempting MQTT connection...");
+    if (client.connect(ClientID, username, mqttpass)) {
+      Serial.println("Connected to MQTT broker");
+    } else {
+      Serial.print("Failed to connect to MQTT broker, retrying in 5 seconds...");
+      delay(5000);
+    }
+    client.loop();  // Maintain the MQTT connection
   }
 }
