@@ -51,6 +51,7 @@ void loop() {
 
     Serial.println(jsonBuffer);
     client.publish(topicSoundReadings, jsonBuffer);
+    client.publish(topic150Hz, String(155420).c_str());
   }
 
   client.loop();

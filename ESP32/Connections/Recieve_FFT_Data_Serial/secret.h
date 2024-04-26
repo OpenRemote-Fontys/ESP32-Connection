@@ -1,9 +1,9 @@
 // Wifi 
-// const char* ssid = "iotroam"; // Wifi SSID
-// const char* password = "EbSkb8Fxdy"; // Wifi Password (is mac dependant) https://iotroam.nl/
+const char* ssid = "iotroam"; // Wifi SSID
+const char* password = "EbSkb8Fxdy"; // Wifi Password (is mac dependant) https://iotroam.nl/
 
-const char* ssid = "TheBarMat"; // Wifi SSID
-const char* password = "45397530"; 
+// const char* ssid = "TheBarMat"; // Wifi SSID
+// const char* password = "45397530"; 
 
 
 //MQTT Broker
@@ -15,6 +15,7 @@ const char* ClientID = "esp32-demolab-1";
 
 //subscribing Topic
 const char *topicSoundReadings = "master/esp32-demolab-1/writeattributevalue/SoundReadingsJSON/3ixRNBYVh8ouCsTF9cLkI5"; //see Subscribing Topics in Documentation https://github.com/openremote/openremote/wiki/User-Guide%3A-Manager-APIs#mqtt-api-mqtt-broker
+const char *topic150Hz = "master/esp32-demolab-1/writeattributevalue/150Hz/3ixRNBYVh8ouCsTF9cLkI5"; //see Subscribing Topics in Documentation https://github.com/openremote/openremote/wiki/User-Guide%3A-Manager-APIs#mqtt-api-mqtt-broker
 
 //Local CA
 
