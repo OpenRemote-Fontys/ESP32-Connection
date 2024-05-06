@@ -29,7 +29,7 @@ void loop() {
     reconnect();
   }
 
-  if (Serial.available() > 0) {
+   if (Serial.available() > 0) {
     String receivedDataString = Serial.readStringUntil('\n');
     Serial.println(receivedDataString);
 
@@ -38,23 +38,26 @@ void loop() {
     receivedDataString.toCharArray(receivedData, sizeof(receivedData));
 
     char *value = strtok(receivedData, ",");
-    
+
     int i = 0;
     while (value != NULL && i < 16) {
-      FFTValues[i] = value;
+      FFTValues[i] = atoi(value);  // Convert string to integer
       value = strtok(NULL, ",");
       i++;
     }
 
-    String jsonString = "{ ";
-    jsonString += " \" \" "
+    // Populate the JSON document with FFTValues
+    JsonArray array = doc.to<JsonArray>();
+    for (int i = 0; i < 16; i++) {
+        array.add(FFTValues[i]);
+    }
 
+    // Serialize the JSON document into a char array
     char jsonBuffer[256];
     serializeJson(doc, jsonBuffer);
 
     Serial.println(jsonBuffer);
     client.publish(topicSoundReadings, jsonBuffer);
-    client.publish(topic150Hz, String(155420).c_str());
   }
 
   client.loop();
