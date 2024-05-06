@@ -38,13 +38,16 @@ void loop() {
     receivedDataString.toCharArray(receivedData, sizeof(receivedData));
 
     char *value = strtok(receivedData, ",");
+    
     int i = 0;
-
     while (value != NULL && i < 16) {
-      doc["FFT" + String(i)] = atoi(value);
+      FFTValues[i] = value;
       value = strtok(NULL, ",");
       i++;
     }
+
+    String jsonString = "{ ";
+    jsonString += " \" \" "
 
     char jsonBuffer[256];
     serializeJson(doc, jsonBuffer);
