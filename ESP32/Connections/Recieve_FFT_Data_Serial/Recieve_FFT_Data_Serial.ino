@@ -34,16 +34,17 @@ void loop() {
     String receivedDataString = Serial.readStringUntil('\n');
     Serial.println(receivedDataString);
 
-    DynamicJsonDocument doc(256);  // Adjust size as needed
+    DynamicJsonDocument doc1(256);  // Adjust size as needed
+    DynamicJsonDocument doc2(256);  // Adjust size as needed
 
     char receivedData[128];
     receivedDataString.toCharArray(receivedData, sizeof(receivedData));
 
     char *value = strtok(receivedData, ",");
-    const char *names[16] = {"80Hz", "115Hz", "160Hz", "225Hz", "320Hz", "450Hz", "630Hz", "890Hz", "1250Hz", "1770Hz", "2500Hz", "3550Hz", "5000Hz", "7000Hz", "10000Hz", "14000Hz"};
+    const char *names[16] = { "80 Hz", "115 Hz", "160 Hz", "225 Hz", "320 Hz", "450 Hz", "630 Hz", "890 Hz", "1250 Hz", "1770 Hz", "2500 Hz", "3550 Hz", "5000 Hz", "7000 Hz", "10000 Hz", "14000 Hz" };
 
-    JsonObject obj1 = doc.to<JsonObject>(); // Using JsonObject instead of JsonArray
-    JsonObject obj2 = doc.to<JsonObject>(); // Using JsonObject instead of JsonArray
+    JsonObject obj1 = doc1.to<JsonObject>();  // Using JsonObject instead of JsonArray
+    JsonObject obj2 = doc2.to<JsonObject>();  // Using JsonObject instead of JsonArray
 
     int i = 0;
     while (value != NULL && i < 8) {
@@ -58,15 +59,19 @@ void loop() {
       i++;
     }
 
-     char jsonBuffer1[256];
+
+    char jsonBuffer1[256];
     serializeJson(obj1, jsonBuffer1);
 
     char jsonBuffer2[256];
     serializeJson(obj2, jsonBuffer2);
 
+    Serial.println(jsonBuffer1);
+    Serial.println(jsonBuffer2);
+
     client.publish(topicSoundReadings1, jsonBuffer1);
     client.publish(topicSoundReadings2, jsonBuffer2);
-}
+  }
 
 
   client.loop();
