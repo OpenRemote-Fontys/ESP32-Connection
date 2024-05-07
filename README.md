@@ -1,7 +1,7 @@
 This is the readme for the Hardware section of the OpenRemote Office IoT group. <br> 
 
-FileStructure
-.
+FileStructure  <br> 
+. <br> 
 ├── ESP32                     # All projects and files that get uploaded to the esp32 <br> 
 ├───── Connections              # Projects that have connections to openremote    <br> 
 ├───── Tests                    # Test projects for testsing smaller chunks  <br> 
@@ -9,7 +9,7 @@ FileStructure
 
 Version Control:
 - Arduino
-- Im lazy so i will add more here-
+- Im lazy so i will add more here
 
 Hardware:
 - ESP32 Devkit V1
