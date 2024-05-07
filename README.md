@@ -1,4 +1,4 @@
-This is the readme for the Hardware section of the OpenRemote Office IoT group.
+This is the readme for the Hardware section of the OpenRemote Office IoT group. <br> 
 
 FileStructure
 .
@@ -8,9 +8,8 @@ FileStructure
 ├── Teensy                    # Projects Running on the Teensy 4.1  <br> 
 
 Version Control:
-Arduino
--Im lazy so i will add more here-
-
+- Arduino
+- Im lazy so i will add more here-
 
 Hardware:
 - ESP32 Devkit V1
