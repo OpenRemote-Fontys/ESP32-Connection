@@ -1,4 +1,4 @@
-#define audioPin 34
+#define audioPin 26
 
 void setup() {
   Serial.begin(115200);

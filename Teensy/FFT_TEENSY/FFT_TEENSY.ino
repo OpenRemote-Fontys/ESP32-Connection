@@ -81,7 +81,7 @@ void loop() {
 
   avgCount++;
 
-  if (millis() - averagePeriodStartTime > 20000) {
+  if (millis() - averagePeriodStartTime > 3500) {
     for (int i = 0; i < NUMBER_BANDS; i++) {
       Serial1.print(averageValuesSum[i]/avgCount);
       Serial.print(averageValuesSum[i]/avgCount);
@@ -102,5 +102,4 @@ void loop() {
   }
 
 
-  delay(10000);
 }

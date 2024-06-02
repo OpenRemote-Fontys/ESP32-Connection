@@ -2,7 +2,7 @@
 const char* ssid = "iotroam"; // Wifi SSID
 const char* password = "EbSkb8Fxdy"; // Wifi Password (is mac dependant) https://iotroam.nl/
 
-// const char* ssid = "TheBarMat"; // Wifi SSID
+// const char* ssid = "T`heBarMat"; // Wifi SSID
 // const char* password = "45397530"; 
 
 
